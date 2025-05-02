@@ -36,8 +36,6 @@ ball.goto(0, 0)
 ball.dx = 0.1
 ball.dy = -0.1
 
-
-
 # Toetsenbordbinding
 wn.listen()
 wn.onkeypress(paddle_up, "w")
@@ -45,6 +43,19 @@ wn.onkeypress(paddle_down, "s")
 
 # Score variabele
 score = 0
+
+# Pen om de score weer te geven
+pen = turtle.Turtle()
+pen.speed(0)
+pen.color("white")
+pen.penup()
+pen.hideturtle()
+pen.goto(0, 260)
+pen.write("Score: 0", align="center", font=("Courier", 24, "normal"))
+
+def update_score():
+    pen.clear()
+    pen.write("Score: {}".format(score), align="center", font=("Courier", 24, "normal"))
 
 while True:
     wn.update()
@@ -67,6 +78,21 @@ while True:
             ball.dy = 0
     
     score = score + 1
-    print ("murat score:",score)
+    update_score()  # Werk de score weergave bij
 
+# Score variabele
+score = 0
+
+# Pen om de score weer te geven
+pen = turtle.Turtle()
+pen.speed(0)
+pen.color("white")
+pen.penup()
+pen.hideturtle()
+pen.goto(0, 260)
+pen.write("Score: 0", align="center", font=("Courier", 24, "normal"))
+
+def update_score():
+    pen.clear()
+    pen.write("Score: {}".format(score), align="center", font=("Courier", 24, "normal"))
 input("Press any key to continue...") # tijdelijke toevoeging t.b.v. testen
