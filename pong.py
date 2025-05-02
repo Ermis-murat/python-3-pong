@@ -43,6 +43,9 @@ wn.listen()
 wn.onkeypress(paddle_up, "w")
 wn.onkeypress(paddle_down, "s")
 
+# Score variabele
+score = 0
+
 while True:
     wn.update()
     # Beweeg de bal
@@ -50,12 +53,20 @@ while True:
     ball.sety(ball.ycor() + ball.dy)
     
     # detecteer randen van het scherm
-    if (ball.xcor() > 380 or ball.xcor() < -410 ):
+    if (ball.xcor() > 380 or ball.xcor() < -400 ):
        ball.dx *= -1
     if (ball.ycor() > 290 or ball.ycor() < -290 ):
        ball.dy *= -1
-    if (ball.xcor() < -409):
-        ball.dx = 0
-        ball.dy = 0
+    # Detecteer botsing met paddle
+    if (ball.dx < 0 and ball.xcor() < -380): # ball beweegt naar links en zit bij de linker zijkant.
+        if (paddle.ycor() - 60 < ball.ycor() < paddle.ycor() + 60): # bal 'raakt' de bal
+            ball.dx *= -1 # beweeg de bal de andere kant uit (horizontaal)
+            ball.dy *= -1 # beweeg de bal de andere kant uit (verticaal)
+        else:
+            ball.dx = 0 
+            ball.dy = 0
+    
+    score = score + 1
+    print ("murat score:",score)
 
 input("Press any key to continue...") # tijdelijke toevoeging t.b.v. testen
