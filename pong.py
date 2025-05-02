@@ -1,4 +1,5 @@
 import turtle
+import time 
 
 # Venster instellen
 wn = turtle.Screen()
@@ -43,6 +44,7 @@ wn.onkeypress(paddle_down, "s")
 
 # Score variabele
 score = 0
+life = 3
 
 # Pen om de score weer te geven
 pen = turtle.Turtle()
@@ -55,8 +57,13 @@ pen.write("Score: 0", align="center", font=("Courier", 24, "normal"))
 
 def update_score():
     pen.clear()
-    pen.write("Score: {}".format(score), align="center", font=("Courier", 24, "normal"))
+    pen.write("Score: {} Levens: {}".format(score, life), align="center", font=("Courier", 24, "normal"))
 
+def game_over():
+    pen.goto(0, 0)
+    pen.write("Game Over", align="center", font=("Courier", 36, "normal"))
+
+    
 while True:
     wn.update()
     # Beweeg de bal
@@ -74,11 +81,18 @@ while True:
             ball.dx *= -1 # beweeg de bal de andere kant uit (horizontaal)
             ball.dy *= -1 # beweeg de bal de andere kant uit (verticaal)
         else:
-            ball.dx = 0 
-            ball.dy = 0
+            life = life -1
+            ball.goto(0, 0)
+            time.sleep(3)
+
     
     score = score + 1
     update_score()  # Werk de score weergave bij
+
+    if (life == 0):
+        game_over
+        break
+
 
 # Score variabele
 score = 0
