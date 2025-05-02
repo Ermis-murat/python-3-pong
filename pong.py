@@ -48,5 +48,14 @@ while True:
     # Beweeg de bal
     ball.setx(ball.xcor() + ball.dx)
     ball.sety(ball.ycor() + ball.dy)
+    
+    # detecteer randen van het scherm
+    if (ball.xcor() > 380 or ball.xcor() < -410 ):
+       ball.dx *= -1
+    if (ball.ycor() > 290 or ball.ycor() < -290 ):
+       ball.dy *= -1
+    if (ball.xcor() < -409):
+        ball.dx = 0
+        ball.dy = 0
 
 input("Press any key to continue...") # tijdelijke toevoeging t.b.v. testen
