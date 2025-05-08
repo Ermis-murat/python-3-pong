@@ -1,5 +1,5 @@
 import turtle
-import time 
+import time
 
 # Venster instellen
 wn = turtle.Screen()
@@ -9,24 +9,31 @@ wn.setup(width=800, height=600)
 wn.tracer(0)
 
 # Paddle
-paddle = turtle.Turtle()
-paddle.shape("square")
-paddle.color("white")
-paddle.shapesize(stretch_wid=6, stretch_len=1)
-paddle.penup()
-paddle.goto(-380, 0)
+white_paddle = turtle.Turtle()
+white_paddle.shape("square")
+white_paddle.color("white")
+white_paddle.shapesize(stretch_wid=6, stretch_len=1)
+white_paddle.penup()
+white_paddle.goto(-380, 0)
 
-def paddle_up(): 
-    y = paddle.ycor() 
-    if y < 250: 
-        y += 20 
-        paddle.sety(y)
+black_paddle = turtle.Turtle()
+black_paddle.shape("square")
+black_paddle.color("black")
+black_paddle.shapesize(stretch_wid=2, stretch_len=1)
+black_paddle.penup()
+black_paddle.goto(-380, 0)
 
-def paddle_down(): 
-    y = paddle.ycor() 
-    if y > -240: 
-        y -= 20 
-        paddle.sety(y)
+def paddle_up():
+    y = white_paddle.ycor()
+    if y < 250:
+        white_paddle.sety(y + 20)
+        black_paddle.sety(y + 20)
+
+def paddle_down():
+    y = white_paddle.ycor()
+    if y > -240:
+        white_paddle.sety(y - 20)
+        black_paddle.sety(y - 20)
 
 # Bal
 ball = turtle.Turtle()
@@ -53,7 +60,7 @@ pen.color("white")
 pen.penup()
 pen.hideturtle()
 pen.goto(0, 260)
-pen.write("Score: 0", align="center", font=("Courier", 24, "normal"))
+#pen.write("Score: 0", align="center", font=("Courier", 24, "normal"))
 
 def update_score():
     pen.clear()
@@ -71,42 +78,30 @@ while True:
     ball.sety(ball.ycor() + ball.dy)
     
     # detecteer randen van het scherm
-    if (ball.xcor() > 380 or ball.xcor() < -400 ):
+    if (ball.xcor() > 380 or ball.xcor() < -390 ):
        ball.dx *= -1
     if (ball.ycor() > 290 or ball.ycor() < -290 ):
        ball.dy *= -1
+    
     # Detecteer botsing met paddle
-    if (ball.dx < 0 and ball.xcor() < -380): # ball beweegt naar links en zit bij de linker zijkant.
-        if (paddle.ycor() - 60 < ball.ycor() < paddle.ycor() + 60): # bal 'raakt' de bal
-            ball.dx *= -1 # beweeg de bal de andere kant uit (horizontaal)
-            ball.dy *= -1 # beweeg de bal de andere kant uit (verticaal)
+    if (ball.dx < 0 and ball.xcor() < -379): # ball beweegt naar links en zit bij de linker zijkant.
+        if (white_paddle.ycor() - 60 < ball.ycor() < white_paddle.ycor() + 60): # bal 'raakt' de bal
+            ball.dx = -0.1 # beweeg de bal de andere kant uit (horizontaal)
+            ball.dy = -0.1 # beweeg de bal de andere kant uit (verticaal)\
+            score += 1
+            if (white_paddle.ycor() - 20 < ball.ycor() < white_paddle.ycor() + 20):
+                life = life + 1
+        
         else:
             life = life -1
             ball.goto(0, 0)
             time.sleep(3)
 
-    
-    score = score + 1
     update_score()  # Werk de score weergave bij
 
     if (life == 0):
-        game_over
+        game_over()
+        time.sleep(5)
         break
 
-
-# Score variabele
-score = 0
-
-# Pen om de score weer te geven
-pen = turtle.Turtle()
-pen.speed(0)
-pen.color("white")
-pen.penup()
-pen.hideturtle()
-pen.goto(0, 260)
-pen.write("Score: 0", align="center", font=("Courier", 24, "normal"))
-
-def update_score():
-    pen.clear()
-    pen.write("Score: {}".format(score), align="center", font=("Courier", 24, "normal"))
 input("Press any key to continue...") # tijdelijke toevoeging t.b.v. testen
