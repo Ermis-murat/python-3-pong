@@ -1,6 +1,6 @@
 import turtle
 import time
-
+# exrta leven door nog een padle te maken en verbinden aan de eerste en dan nog een klijnere hotbox maken die levens geeft
 # Venster instellen
 wn = turtle.Screen()
 wn.title("Pong voor Murat ermis")

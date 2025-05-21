@@ -1,1 +1,0 @@
-de bal blijdt vliegen omdat het geen collision heeft
